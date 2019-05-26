@@ -1,0 +1,71 @@
+{% load admin_urls %} <!-- For linking to admin:papers_paper_add -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Papers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-between">
+                <h2>Papers</h2>
+                <div>
+                    <a class="btn btn-dark" href="{% url 'admin:papers_paper_add' %}" role="button">Add paper</a>
+                    <a class="btn btn-dark" href="{% url 'papers:downloadBibtex' %}" role="button">Download Bibtex</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <table id="paperTable" class="table table-sm table-hover table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 30%">Authors</th>
+                            <th scope="col" style="width: 30%">Venue</th>
+                            <th scope="col" style="width: 10%">Year</th>
+                            <!-- <th scope="col" style="width: 10%">Bibtex ID</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for paper in paperList %}
+                        <tr class="table-row" data-href="{% url 'papers:paperInfo' paper.id %}">
+                            <td scope="row"><a href="{{ paper.link }}">{{ paper.title }}</a></td>
+                            <td>{{ paper.authors }}</td>
+                            <td>{{ paper.venue }}</td>
+                            <td>{{ paper.year }}</td>
+                            <!-- <td><small>{{ paper.bibtexId }}</small></td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#paperTable').dataTable({
+                "pageLength": 50,
+                "lengthMenu": [ [10, 50, 100, -1], [10, 50, 100, "All"] ]
+            });
+
+            $(".table-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+
+</body>
+</html>
