@@ -4,3 +4,4 @@ future==0.17.1
 pyparsing==2.4.0
 pytz==2019.1
 sqlparse==0.3.0
+gunicorn==19.9.0
