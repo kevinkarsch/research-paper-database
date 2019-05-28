@@ -4,6 +4,8 @@
 __pycache__/
 local_settings.py
 
+paperserver/papers/migrations/
+
 db.sqlite3
 env
 

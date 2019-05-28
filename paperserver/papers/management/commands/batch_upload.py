@@ -44,9 +44,10 @@ class Command(BaseCommand):
                     link = entry[linkKey]
                     break
             if not link:
-                link = "https://www.google.com/search?q={}".format(entry["title"])
+                link = 'https://www.google.com/search?q="{}"'.format(entry["title"])
 
             paper = Paper(bibtex=bibtex, link=link)
             paper.save()
+            self.stdout.write(self.style.SUCCESS("  -- Imported: {}".format(paper)))
 
         self.stdout.write(self.style.SUCCESS("Successfully imported {} papers.".format(len(bibtexData.entries))))
